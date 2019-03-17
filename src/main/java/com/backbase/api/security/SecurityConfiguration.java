@@ -27,7 +27,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter  {
         http.httpBasic()
             .and()
             .authorizeRequests()
-            .antMatchers("/**") // Restrict all urls
+            .antMatchers("/api/**") // Restrict all urls
             .authenticated(); // Use Basic authentication
     }
     @Override
