@@ -9,12 +9,14 @@ import javax.ws.rs.core.MediaType;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.backbase.api.model.OpenBankTransData;
 import com.backbase.api.model.Transaction;
 import com.backbase.api.model.TransactionMapper;
+import com.backbase.api.rest.controller.RestApiController;
 import com.backbase.api.util.Constants;
 import com.google.gson.Gson;
 
@@ -22,9 +24,17 @@ import com.google.gson.Gson;
 @ContextConfiguration({ "classpath:backbase-servlet.xml" })
 public class ApiTest {
 
+	@Autowired
+	RestApiController restApiController;
+
+	/**
+	 * 
+	 * @throws Exception
+	 *             This is to test the openBank API connection
+	 */
 	@Test
-	public void test() throws Exception {
-		System.out.println("Test is running...");
+	public void testOpenBankApi() throws Exception {
+		System.out.println("testOpenBankApi is running...");
 
 		Client client = ClientBuilder.newClient();
 		String jsonData = client.target(Constants.OPEN_BANK_TRANS_URL).request(MediaType.APPLICATION_JSON)
@@ -36,6 +46,49 @@ public class ApiTest {
 				.collect(Collectors.toList());
 		client.close();
 		assert (transactions.size() > 0);
+		System.out.println("testOpenBankApi is completed.");
+
+	}
+
+	/**
+	 * This is to test /api/v1/transactions
+	 */
+	@Test
+	public void testAPI1() throws Exception {
+
+		System.out.println(" testAPI1 is running");
+
+		List<Transaction> transactions = restApiController.getTransactions();
+		assert (transactions.size() > 0);
+		System.out.println("testAPI1 is completed. " + transactions.size());
+
+	}
+
+	/**
+	 * This is to test /api/v1/transactions/{transactionType}
+	 */
+	@Test
+	public void testAPI2() throws Exception {
+
+		System.out.println(" testAPI2 is running");
+
+		List<Transaction> transactions = restApiController.getTransactionsByTransactionType("sandbox-payment");
+		assert (transactions.size() > 0);
+		System.out.println("testAPI2 is completed. " + transactions.size());
+
+	}
+
+	/**
+	 * This is to test /api/v1/transactionsAmount/{transactionType}
+	 */
+	@Test
+	public void testAPI3() throws Exception {
+
+		System.out.println(" testAPI3 is running");
+
+		Double sumOfTransactions = restApiController.getTransactionsAmount("sandbox-payment");
+		assert (sumOfTransactions >= 0);
+		System.out.println("testAPI3 is completed. " + sumOfTransactions);
 
 	}
 
