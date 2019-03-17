@@ -9,14 +9,25 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 
+import com.backbase.api.util.Constants;
+
+/**
+ * 
+ * @author shafique
+ *
+ */
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
+	/**
+	 * To authenticate with a fixed usernamae and password
+	 */
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		String username = authentication.getName();
 		String password = authentication.getCredentials().toString();
-		if ("test".equals(username) && "123".equals(password)) {
+
+		if (Constants.API_USER_NAME.equals(username) && Constants.API_USER_PASSWORD.equals(password)) {
 			return new UsernamePasswordAuthenticationToken(username, password, Collections.emptyList());
 		} else {
 			throw new BadCredentialsException("Authentication failed");

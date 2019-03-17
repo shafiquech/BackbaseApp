@@ -8,7 +8,13 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+import com.backbase.api.util.Constants;
 
+/**
+ * 
+ * @author shafique
+ *
+ */
 @Configuration
 @EnableWebSecurity
 @ComponentScan(basePackageClasses = CustomAuthenticationProvider.class)
@@ -21,7 +27,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter  {
         http.httpBasic()
             .and()
             .authorizeRequests()
-            .antMatchers("/**")
+            .antMatchers("/**") // Restrict all urls
             .authenticated(); // Use Basic authentication
     }
     @Override
@@ -30,16 +36,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter  {
         auth.authenticationProvider(customAuthenticationProvider);
         // Built-in authentication provider - Order 2
         auth.inMemoryAuthentication()
-            .withUser("admin")
-            .password("{noop}admin@password")
-            //{noop} makes sure that the password encoder doesn't do anything
-            .roles("ADMIN") // Role of the user
+            .withUser(Constants.ADMIN_USER)
+            .password(Constants.ADMIN_PASSWORD)
+            .roles(Constants.ADMIN_ROLE) // Role of the user
             .and()
-            .withUser("user")
-            .password("{noop}user@password")
+            .withUser(Constants.USER_USER)
+            .password(Constants.USER_PASSWORD)
             .credentialsExpired(true)
             .accountExpired(true)
             .accountLocked(true)
-            .roles("USER");
+            .roles(Constants.USER_ROLE);
     }
 }
