@@ -3,12 +3,12 @@ package com.backbase.api.model;
 /**
  * 
  * @author shafique
- *
+ *  This is to map object from Openbank to backbase
  */
 public class TransactionMapper {
 
 	/**
-	 * 
+	 * This method will transform OpenBankTransaction to Transaction object
 	 * @param obt
 	 * @return Transaction
 	 */

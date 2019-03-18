@@ -1,5 +1,11 @@
 package com.backbase.api.model;
 
+/**
+ * 
+ * @author shafique
+ * This is a simple POJO of Transaction in backbase system
+ *
+ */
 public class Transaction {
 	
 	private String id;

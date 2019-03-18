@@ -13,7 +13,7 @@ import com.backbase.api.util.Constants;
 /**
  * 
  * @author shafique
- *
+ * 
  */
 @Configuration
 @EnableWebSecurity
@@ -27,18 +27,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter  {
         http.httpBasic()
             .and()
             .authorizeRequests()
-            .antMatchers("/api/**") // Restrict all urls
-            .authenticated(); // Use Basic authentication
+            .antMatchers("/api/**") // Restrict only api urls
+            .authenticated(); 
     }
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        // Custom authentication provider - Order 1
         auth.authenticationProvider(customAuthenticationProvider);
-        // Built-in authentication provider - Order 2
+        //default authentication - fall-back strategy
         auth.inMemoryAuthentication()
             .withUser(Constants.ADMIN_USER)
             .password(Constants.ADMIN_PASSWORD)
-            .roles(Constants.ADMIN_ROLE) // Role of the user
+            .roles(Constants.ADMIN_ROLE)
             .and()
             .withUser(Constants.USER_USER)
             .password(Constants.USER_PASSWORD)

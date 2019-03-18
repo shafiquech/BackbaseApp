@@ -10,5 +10,5 @@ public interface Constants {
 	String USER_ROLE = "USER";
 	String USER_PASSWORD = "123";
 	String API_USER_NAME = "backbase";
-	String API_USER_PASSWORD = "api123";
+	String API_USER_PASSWORD = "backbase";
 }

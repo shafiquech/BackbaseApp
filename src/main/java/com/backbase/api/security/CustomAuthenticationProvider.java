@@ -20,7 +20,7 @@ import com.backbase.api.util.Constants;
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 
 	/**
-	 * To authenticate with a fixed usernamae and password
+	 * This is to authenticate with a predefined usernamae and password
 	 */
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
